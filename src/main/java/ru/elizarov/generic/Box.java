@@ -15,8 +15,7 @@ public class Box<T> {
         this.content = item;
     }
 
-    // для извлечения объекта
-    public T get() throws BoxEmptyException {
+    public T get() {
         if (content == null) {
             throw new BoxEmptyException("Коробка пуста!");
         }
@@ -25,12 +24,15 @@ public class Box<T> {
         return item;
     }
 
-    // для проверки
     public boolean isEmpty() {
         return content == null;
     }
 
-    public void extractAndPrint() throws BoxEmptyException {
-        System.out.println("Извлеченное значение: " + get());
+    public void extractAndPrint() {
+        try {
+            System.out.println("Извлеченное значение: " + get());
+        } catch (BoxEmptyException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

@@ -18,20 +18,29 @@ public class FunctionProcessor {
     }
 
     public static <T, P> List<P> applyFunction(List<T> values, Function<T, P> function) {
-        return values.stream()
-                .map(function)
-                .collect(Collectors.toList());
+        List<P> result = new ArrayList<>();
+        for (T value : values) {
+            result.add(function.apply(value));
+        }
+        return result;
     }
 
     public static <T> List<T> filterList(List<T> list, Predicate<T> predicate) {
-        return list.stream()
-                .filter(predicate)
-                .collect(Collectors.toList());
+        List<T> result = new ArrayList<>();
+        for (T item : list) {
+            if (predicate.test(item)) {
+                result.add(item);
+            }
+        }
+        return result;
     }
 
     public static <T> T reduce(List<T> values, T identity, BinaryOperator<T> accumulator) {
-        return values.stream()
-                .reduce(identity, accumulator);
+        T result = identity;
+        for (T value : values) {
+            result = accumulator.apply(result, value);
+        }
+        return result;
     }
 
     public static <T, P> P collect(List<T> source, Supplier<P> collectionFactory, Function<List<T>, P> collector) {
